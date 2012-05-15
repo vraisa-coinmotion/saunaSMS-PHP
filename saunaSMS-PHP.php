@@ -31,7 +31,7 @@ function sendSMS($phonenumber, $message){
     $url = "https://oma.saunalahti.fi/settings/smsSend";
 
     //set POST variables
-    $fields_string = "";
+    
     $fields = array(
                     'sender'=>$sender,
                     'recipients'=>$phonenumber,
@@ -39,10 +39,8 @@ function sendSMS($phonenumber, $message){
                     'size'=>"160",
                     'text'=>urlencode($message)
     );
-
-    //url-ify the data for the POST
-    foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-    rtrim($fields_string,'&');
+    
+    $fields_string = http_build_query($fields);
 
     //open connection
     $ch = curl_init();
